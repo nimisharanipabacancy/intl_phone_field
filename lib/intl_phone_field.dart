@@ -34,6 +34,8 @@ class IntlPhoneField extends StatefulWidget {
   ///    which are more specialized input change notifications.
   final ValueChanged<PhoneNumber>? onChanged;
 
+  final ValueChanged<Bool>? onValidation;
+  
   final ValueChanged<Country>? onCountryChanged;
 
   /// An optional method that validates an input. Returns an error string to display if the input is invalid, or null otherwise.
@@ -255,6 +257,7 @@ class IntlPhoneField extends StatefulWidget {
     this.onSubmitted,
     this.validator,
     this.onChanged,
+    this.onValidation,
     this.countries,
     this.onCountryChanged,
     this.onSaved,
@@ -412,10 +415,10 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       },
       validator: (value) {
         if (!widget.disableLengthCheck && value != null) {
-          return value.length >= _selectedCountry.minLength &&
-                  value.length <= _selectedCountry.maxLength
-              ? null
-              : widget.invalidNumberMessage;
+          bool isValid = value.length >= _selectedCountry.minLength &&
+              value.length <= _selectedCountry.maxLength;
+          widget.onValidation?.call(isValid);
+          return isValid ? null : widget.invalidNumberMessage;
         }
 
         return validatorMessage;
