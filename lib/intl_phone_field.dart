@@ -34,7 +34,7 @@ class IntlPhoneField extends StatefulWidget {
   ///    which are more specialized input change notifications.
   final ValueChanged<PhoneNumber>? onChanged;
 
-  final ValueChanged<Bool>? onValidation;
+  final ValueChanged<bool>? onValidation;
   
   final ValueChanged<Country>? onCountryChanged;
 
